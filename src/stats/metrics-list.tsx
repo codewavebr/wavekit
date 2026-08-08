@@ -3,7 +3,7 @@
 import type { LucideIcon } from "lucide-react";
 
 import { cn } from "../utils";
-import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "../ui";
 
 export interface MetricItem {
   title: string;

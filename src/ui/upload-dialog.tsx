@@ -2,22 +2,15 @@
 
 import { Upload, X } from "lucide-react";
 import { useCallback, useEffect, useState, type DragEvent } from "react";
+import { Button, Modal, useOverlayState } from "@heroui/react";
 
 import { cn } from "../utils";
-import { Button } from "./button";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-} from "./dialog";
 
-export interface UploadWithDialogProps {
+export type UploadWithDialogProps = {
   isOpen: boolean;
   onClose: () => void;
   onUpload?: (base64: string) => void;
-}
+};
 
 export function UploadWithDialog({
   isOpen,
@@ -28,6 +21,12 @@ export function UploadWithDialog({
   const [preview, setPreview] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [dragActive, setDragActive] = useState(false);
+  const state = useOverlayState({
+    isOpen,
+    onOpenChange: (open) => {
+      if (!open) onClose();
+    },
+  });
 
   useEffect(() => {
     if (!file) {
@@ -79,91 +78,82 @@ export function UploadWithDialog({
   }
 
   return (
-    <Dialog onOpenChange={onClose} open={isOpen}>
-      <DialogContent className="sm:max-w-xl">
-        <DialogHeader>
-          <DialogTitle>Enviar Imagem</DialogTitle>
-          <DialogDescription>
-            Arraste e solte sua imagem aqui ou clique para selecionar.
-          </DialogDescription>
-        </DialogHeader>
-        <div
-          className={cn(
-            "group relative grid h-52 w-full cursor-pointer place-items-center rounded-lg border-2 border-dashed border-muted-foreground/25 px-5 py-2.5 text-center transition hover:bg-muted/25",
-            dragActive && "border-muted-foreground/50",
-            file && "border-primary",
-          )}
-          onDragOver={(event) => {
-            event.preventDefault();
-            setDragActive(true);
-          }}
-          onDragLeave={(event) => {
-            event.preventDefault();
-            setDragActive(false);
-          }}
-          onDrop={handleDrop}
-          onClick={() =>
-            document.getElementById("file-input-upload-dialog")?.click()
-          }
-        >
-          <input
-            id="file-input-upload-dialog"
-            type="file"
-            accept="image/*"
-            className="hidden"
-            onChange={handleFileChange}
-          />
-          {preview ? (
-            <div className="relative flex flex-col items-center justify-center gap-2">
-              <img
-                src={preview}
-                alt="preview"
-                width={120}
-                height={120}
-                className="aspect-square rounded-full object-cover"
-              />
-              <Button
-                size="icon"
-                variant="outline"
-                className="absolute right-2 top-2"
-                onClick={(event) => {
-                  event.stopPropagation();
-                  handleRemove();
+    <Modal state={state}>
+      <Modal.Backdrop>
+        <Modal.Container>
+          <Modal.Dialog>
+            <Modal.Header>
+              <Modal.Heading>Upload de imagem</Modal.Heading>
+            </Modal.Header>
+            <Modal.Body className="space-y-4">
+              <p className="text-sm text-muted-foreground">
+                Arraste uma imagem ou selecione um arquivo.
+              </p>
+
+              <div
+                className={cn(
+                  "relative flex min-h-40 cursor-pointer flex-col items-center justify-center rounded-xl border border-dashed border-border p-6 transition",
+                  dragActive && "border-primary bg-primary/5",
+                )}
+                onDragEnter={(event) => {
+                  event.preventDefault();
+                  setDragActive(true);
                 }}
+                onDragLeave={(event) => {
+                  event.preventDefault();
+                  setDragActive(false);
+                }}
+                onDragOver={(event) => event.preventDefault()}
+                onDrop={handleDrop}
               >
-                <X className="h-4 w-4" />
+                {preview ? (
+                  <div className="relative">
+                    <img
+                      src={preview}
+                      alt="Preview"
+                      className="max-h-48 rounded-lg object-contain"
+                    />
+                    <Button
+                      isIconOnly
+                      size="sm"
+                      variant="secondary"
+                      className="absolute -right-2 -top-2"
+                      onPress={handleRemove}
+                    >
+                      <X className="size-4" />
+                    </Button>
+                  </div>
+                ) : (
+                  <>
+                    <Upload className="mb-2 size-8 text-muted-foreground" />
+                    <span className="text-sm text-muted-foreground">
+                      Solte a imagem aqui
+                    </span>
+                    <input
+                      type="file"
+                      accept="image/*"
+                      className="absolute inset-0 cursor-pointer opacity-0"
+                      onChange={handleFileChange}
+                    />
+                  </>
+                )}
+              </div>
+            </Modal.Body>
+            <Modal.Footer className="flex gap-2">
+              <Button variant="outline" onPress={onClose} isDisabled={loading}>
+                Cancelar
               </Button>
-              <span className="mt-2 text-xs text-muted-foreground">
-                Clique para trocar a imagem
-              </span>
-            </div>
-          ) : (
-            <div className="flex flex-col items-center justify-center gap-4 sm:px-5">
-              <div className="rounded-full border border-dashed p-3">
-                <Upload
-                  aria-hidden="true"
-                  className="size-7 text-muted-foreground"
-                />
-              </div>
-              <div className="space-y-px">
-                <p className="font-medium text-muted-foreground">
-                  Arraste e solte a imagem aqui ou clique para selecionar
-                </p>
-                <p className="text-sm text-muted-foreground/70">
-                  Apenas imagens sao aceitas
-                </p>
-              </div>
-            </div>
-          )}
-        </div>
-        <Button
-          className="mt-4 w-fit"
-          disabled={loading || !file}
-          onClick={handleSave}
-        >
-          Salvar
-        </Button>
-      </DialogContent>
-    </Dialog>
+              <Button
+                onPress={handleSave}
+                isDisabled={!file}
+                isPending={loading}
+              >
+                Salvar
+              </Button>
+            </Modal.Footer>
+          </Modal.Dialog>
+        </Modal.Container>
+      </Modal.Backdrop>
+    </Modal>
   );
 }

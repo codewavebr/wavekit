@@ -1,83 +1,66 @@
 "use client";
 
 import { format, type Locale } from "date-fns";
-import { useState } from "react";
+import { useState, type ButtonHTMLAttributes } from "react";
+import { Button, Calendar, Popover } from "@heroui/react";
+import { CalendarDate, type DateValue } from "@internationalized/date";
 
 import { cn } from "../utils";
-import { Button } from "./button";
-import { Calendar } from "./calendar";
-import { Popover, PopoverContent, PopoverTrigger } from "./popover";
 
-import type { ButtonHTMLAttributes } from "react";
+function toCalendarDate(date: Date): CalendarDate {
+  return new CalendarDate(date.getFullYear(), date.getMonth() + 1, date.getDate());
+}
 
-export type SingleDayPickerProps = Omit<
-  ButtonHTMLAttributes<HTMLButtonElement>,
-  "onSelect" | "value"
-> & {
-  onSelect: (value: Date | undefined) => void;
-  value?: Date | undefined;
-  placeholder: string;
-  labelVariant?: "P" | "PP" | "PPP";
+function fromDateValue(value: DateValue | null): Date | undefined {
+  if (!value) return undefined;
+  return new Date(value.year, value.month - 1, value.day);
+}
+
+export type SingleDayPickerProps = {
+  value?: Date;
+  onChange?: (date: Date | undefined) => void;
+  onSelect?: (date: Date | undefined) => void;
+  placeholder?: string;
   locale?: Locale;
+  className?: string;
+  id?: string;
+  buttonProps?: ButtonHTMLAttributes<HTMLButtonElement>;
 };
 
-const capitalizeLongWords = (value: string) =>
-  value
-    .split(" ")
-    .map((word) =>
-      word.length > 2 ? word.charAt(0).toUpperCase() + word.slice(1) : word,
-    )
-    .join(" ");
-
-function SingleDayPicker({
-  id,
-  onSelect,
-  className,
-  placeholder,
-  labelVariant = "PPP",
-  locale,
+export function SingleDayPicker({
   value,
-  ...props
+  onChange,
+  onSelect,
+  placeholder = "Selecionar data",
+  locale,
+  className,
+  buttonProps,
 }: SingleDayPickerProps) {
   const [open, setOpen] = useState(false);
-
-  const handleSelect = (date: Date | undefined) => {
-    onSelect(date);
-    setOpen(false);
-  };
+  const emit = onChange ?? onSelect;
 
   return (
-    <Popover open={open} onOpenChange={setOpen} modal>
-      <PopoverTrigger asChild>
+    <Popover isOpen={open} onOpenChange={setOpen}>
+      <Popover.Trigger>
         <Button
-          id={id}
           variant="outline"
-          className={cn(
-            "group relative h-9 w-full justify-start whitespace-nowrap px-3 py-2 font-normal hover:bg-inherit",
-            className,
-          )}
-          {...props}
+          className={cn("w-full justify-start font-normal", className)}
+          {...(buttonProps as object)}
         >
-          {value ? (
-            <span>
-              {capitalizeLongWords(format(value, labelVariant, { locale }))}
-            </span>
-          ) : (
-            <span className="text-muted-foreground">{placeholder}</span>
-          )}
+          {value
+            ? format(value, "PPP", locale ? { locale } : undefined)
+            : placeholder}
         </Button>
-      </PopoverTrigger>
-
-      <PopoverContent align="center" className="w-fit p-0">
+      </Popover.Trigger>
+      <Popover.Content className="p-2">
         <Calendar
-          mode="single"
-          selected={value}
-          onSelect={handleSelect}
-          initialFocus
+          value={value ? toCalendarDate(value) : undefined}
+          onChange={(next) => {
+            emit?.(fromDateValue(next));
+            setOpen(false);
+          }}
         />
-      </PopoverContent>
+      </Popover.Content>
     </Popover>
   );
 }
-
-export { SingleDayPicker };

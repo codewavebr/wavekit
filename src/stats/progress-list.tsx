@@ -1,9 +1,7 @@
 "use client";
 
 import { cn } from "../utils";
-import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
-import { Label } from "../ui/label";
-import { Progress } from "../ui/progress";
+import { Card, CardContent, CardHeader, CardTitle, Label, ProgressBar } from "../ui";
 
 export interface ProgressItem {
   name: string;
@@ -85,7 +83,11 @@ export function ProgressList({
                     )}
                   </span>
                 </div>
-                <Progress value={percentage} className="h-3" />
+                <ProgressBar value={percentage} className="h-3" aria-label={item.name}>
+                  <ProgressBar.Track>
+                    <ProgressBar.Fill />
+                  </ProgressBar.Track>
+                </ProgressBar>
               </div>
             );
           })}

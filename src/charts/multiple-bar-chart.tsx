@@ -11,7 +11,7 @@ import {
   YAxis,
 } from "recharts";
 import { useComplementaryColor } from "../theme";
-import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "../ui";
 
 export interface WorkoutData {
   name: string;

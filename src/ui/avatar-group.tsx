@@ -1,22 +1,22 @@
+"use client";
+
 import {
   Children,
   cloneElement,
   forwardRef,
   useMemo,
-  type ElementRef,
   type HTMLAttributes,
   type ReactElement,
 } from "react";
 
 import { cn } from "../utils";
 
-type AvatarGroupRef = ElementRef<"div">;
 type AvatarGroupProps = HTMLAttributes<HTMLDivElement> & {
   max?: number;
   spacing?: number;
 };
 
-const AvatarGroup = forwardRef<AvatarGroupRef, AvatarGroupProps>(
+const AvatarGroup = forwardRef<HTMLDivElement, AvatarGroupProps>(
   ({ className, children, max = 1, spacing = 10, ...props }, ref) => {
     const avatarItems = Children.toArray(children) as ReactElement<
       HTMLAttributes<HTMLElement>
@@ -27,10 +27,7 @@ const AvatarGroup = forwardRef<AvatarGroupRef, AvatarGroupProps>(
         <>
           {avatarItems.slice(0, max).map((child, index) =>
             cloneElement(child, {
-              className: cn(
-                child.props.className,
-                "border-2 border-background",
-              ),
+              className: cn(child.props.className, "border-2 border-background"),
               style: {
                 marginLeft: index === 0 ? 0 : -spacing,
                 ...child.props.style,
@@ -42,7 +39,7 @@ const AvatarGroup = forwardRef<AvatarGroupRef, AvatarGroupProps>(
             <div
               className={cn(
                 "relative flex items-center justify-center rounded-full border-2 border-background bg-muted",
-                avatarItems[0].props.className,
+                avatarItems[0]?.props.className,
               )}
               style={{ marginLeft: -spacing }}
             >

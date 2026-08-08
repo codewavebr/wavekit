@@ -1,18 +1,13 @@
 "use client";
 
 import { useState, type ReactNode } from "react";
-
-import { Button } from "./button";
 import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from "./dialog";
+  Button,
+  Modal,
+  useOverlayState,
+} from "@heroui/react";
 
-export interface ConfirmDialogProps {
+export type ConfirmDialogProps = {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   title: string;
@@ -21,7 +16,7 @@ export interface ConfirmDialogProps {
   cancelText?: string;
   onConfirm: () => Promise<void> | void;
   loading?: boolean;
-}
+};
 
 export function ConfirmDialog({
   open,
@@ -34,40 +29,53 @@ export function ConfirmDialog({
   loading: loadingProp,
 }: ConfirmDialogProps) {
   const [loading, setLoading] = useState(false);
+  const state = useOverlayState({
+    isOpen: open,
+    onOpenChange,
+  });
 
   const handleConfirm = async () => {
     setLoading(true);
-    await onConfirm();
-    setLoading(false);
-    onOpenChange(false);
+    try {
+      await onConfirm();
+      onOpenChange(false);
+    } finally {
+      setLoading(false);
+    }
   };
 
+  const isBusy = Boolean(loadingProp || loading);
+
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent>
-        <DialogHeader>
-          <DialogTitle>{title}</DialogTitle>
-          {description && <DialogDescription>{description}</DialogDescription>}
-        </DialogHeader>
-        <DialogFooter className="flex gap-2 pt-4">
-          <Button
-            type="button"
-            variant="outline"
-            onClick={() => onOpenChange(false)}
-            disabled={loadingProp || loading}
-          >
-            {cancelText}
-          </Button>
-          <Button
-            type="button"
-            variant="destructive"
-            onClick={handleConfirm}
-            loading={loadingProp || loading}
-          >
-            {confirmText}
-          </Button>
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
+    <Modal state={state}>
+      <Modal.Backdrop isDismissable={!isBusy}>
+        <Modal.Container>
+          <Modal.Dialog>
+            <Modal.Header>
+              <Modal.Heading>{title}</Modal.Heading>
+            </Modal.Header>
+            {description ? <Modal.Body>{description}</Modal.Body> : null}
+            <Modal.Footer className="flex gap-2">
+              <Button
+                type="button"
+                variant="outline"
+                isDisabled={isBusy}
+                onPress={() => onOpenChange(false)}
+              >
+                {cancelText}
+              </Button>
+              <Button
+                type="button"
+                variant="danger"
+                isPending={isBusy}
+                onPress={handleConfirm}
+              >
+                {confirmText}
+              </Button>
+            </Modal.Footer>
+          </Modal.Dialog>
+        </Modal.Container>
+      </Modal.Backdrop>
+    </Modal>
   );
 }

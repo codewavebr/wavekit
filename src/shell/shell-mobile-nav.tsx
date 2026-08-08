@@ -1,13 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { Dropdown } from "@heroui/react";
 
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "../ui";
 import { cn } from "../utils";
 import type { WaveIconMap, WaveNavItem } from "./types";
 
@@ -56,7 +51,8 @@ export function ShellMobileNav({
         style={{ WebkitOverflowScrolling: "touch" }}
       >
         {items.map((item, index) => {
-          const Icon = iconMap[item.icon || fallbackIcon] || iconMap[fallbackIcon];
+          const Icon =
+            iconMap[item.icon || fallbackIcon] || iconMap[fallbackIcon];
           const isActive =
             item.href === "/"
               ? activePath === "/"
@@ -65,37 +61,45 @@ export function ShellMobileNav({
 
           if (hasSubItems) {
             return (
-              <DropdownMenu key={item.label || item.title || index}>
-                <DropdownMenuTrigger asChild>
-                  <button className="relative flex flex-col items-center justify-center rounded-xl text-white">
+              <Dropdown key={item.label || item.title || index}>
+                <Dropdown.Trigger>
+                  <button
+                    type="button"
+                    className="relative flex flex-col items-center justify-center rounded-xl text-white"
+                  >
                     {isActive ? (
                       <span className="pointer-events-none absolute -bottom-4 left-1/2 h-1 w-6 -translate-x-1/2 transform rounded-t bg-white" />
                     ) : null}
                     {Icon ? <Icon className="h-7 w-7" /> : null}
                   </button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent sideOffset={8} align="center">
-                  {item.items?.map((subItem, subIndex) => (
-                    <DropdownMenuItem
-                      key={`${subItem.title}-${subIndex}`}
-                      onClick={() => onNavigate(subItem.href || "/")}
-                      className={cn(
-                        activePath === subItem.href
-                          ? "bg-accent text-accent-foreground"
-                          : "",
-                      )}
-                    >
-                      {subItem.title}
-                    </DropdownMenuItem>
-                  ))}
-                </DropdownMenuContent>
-              </DropdownMenu>
+                </Dropdown.Trigger>
+                <Dropdown.Popover>
+                  <Dropdown.Menu
+                    onAction={(key) => onNavigate(String(key))}
+                  >
+                    {item.items?.map((subItem, subIndex) => (
+                      <Dropdown.Item
+                        key={subItem.href || `${subItem.title}-${subIndex}`}
+                        id={subItem.href || `/`}
+                        className={cn(
+                          activePath === subItem.href
+                            ? "bg-accent text-accent-foreground"
+                            : "",
+                        )}
+                      >
+                        {subItem.title}
+                      </Dropdown.Item>
+                    ))}
+                  </Dropdown.Menu>
+                </Dropdown.Popover>
+              </Dropdown>
             );
           }
 
           return (
             <button
               key={item.label || item.title || index}
+              type="button"
               className="relative flex flex-col items-center justify-center rounded-xl text-white"
               onClick={() => item.href && onNavigate(item.href)}
             >
