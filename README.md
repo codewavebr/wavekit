@@ -1,4 +1,4 @@
-# @codewave/wavekit
+# @codewavebr/wavekit
 
 Shared UI foundation for Code Wave projects.
 
@@ -13,7 +13,7 @@ WaveKit owns visual primitives and application chrome:
 - `icons`: shared icon map and icon types.
 - `utils`: presentation helpers used by UI components.
 
-WaveKit should not import product-specific auth, billing, tenant, database, or API code. Those belong in `@codewave/wavecore` or in the consuming app.
+WaveKit should not import product-specific auth, billing, tenant, database, or API code. Those belong in `@codewavebr/wavecore` or in the consuming app.
 
 App-specific components that still belong outside WaveKit:
 
@@ -24,9 +24,9 @@ App-specific components that still belong outside WaveKit:
 
 Publishing happens automatically when a GitHub Release is published.
 The workflow syncs `package.json` version from the release tag (e.g. `v0.1.0`)
-and publishes `@codewave/wavekit` to GitHub Packages.
+and publishes `@codewavebr/wavekit` to GitHub Packages.
 
-Prepared for GitHub Packages under the `@codewave` scope.
+Prepared for GitHub Packages under the `@codewavebr` scope.
 Consumers should authenticate to `https://npm.pkg.github.com`.
 
 ## Scripts
