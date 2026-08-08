@@ -1,7 +1,16 @@
-export * from "./dashboard-shell";
-export * from "./shell-brand";
-export * from "./shell-header";
-export * from "./shell-mobile-nav";
-export * from "./shell-nav";
-export * from "./shell-sidebar";
-export * from "./types";
+export { DashboardShell } from "./dashboard-shell";
+export { ShellBrand } from "./shell-brand";
+export { ShellHeader } from "./shell-header";
+export { ShellMobileNav } from "./shell-mobile-nav";
+export { ShellNav } from "./shell-nav";
+export { ShellSidebar } from "./shell-sidebar";
+export type {
+  WaveIconMap,
+  WaveIconProps,
+  WaveLinkComponent,
+  WaveLinkComponentProps,
+  WaveNavItem,
+  WaveShellBrand,
+  WaveShellSlots,
+  WaveShellUser,
+} from "./types";

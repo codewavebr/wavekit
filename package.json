@@ -1,6 +1,6 @@
 {
     "name":  "@codewavebr/wavekit",
-    "version":  "0.2.1",
+    "version":  "0.2.2",
     "type":  "module",
     "sideEffects":  [
                         "./dist/styles.css"
