@@ -31,9 +31,17 @@ export type WaveLinkComponentProps = {
   className?: string;
   children: ReactNode;
   onClick?: () => void;
+  "aria-label"?: string;
 };
 
 export type WaveLinkComponent = ComponentType<WaveLinkComponentProps>;
+
+export type WaveShellBrand = {
+  icon: ReactNode;
+  title?: ReactNode;
+  href?: string;
+  ariaLabel?: string;
+};
 
 export type WaveShellSlots = {
   headerActions?: ReactNode;

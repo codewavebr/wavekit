@@ -5,7 +5,12 @@ import type { ReactNode } from "react";
 import { ShellHeader } from "./shell-header";
 import { ShellMobileNav } from "./shell-mobile-nav";
 import { ShellSidebar } from "./shell-sidebar";
-import type { WaveIconMap, WaveLinkComponent, WaveNavItem } from "./types";
+import type {
+  WaveIconMap,
+  WaveLinkComponent,
+  WaveNavItem,
+  WaveShellBrand,
+} from "./types";
 
 type DashboardShellProps = {
   children: ReactNode;
@@ -16,6 +21,7 @@ type DashboardShellProps = {
   onSidebarToggle: () => void;
   onMobileNavigate: (href: string) => void;
   LinkComponent?: WaveLinkComponent;
+  brand?: WaveShellBrand;
   title: ReactNode;
   subtitle?: ReactNode;
   headerActions?: ReactNode;
@@ -30,6 +36,7 @@ export function DashboardShell({
   onSidebarToggle,
   onMobileNavigate,
   LinkComponent,
+  brand,
   title,
   subtitle,
   headerActions,
@@ -38,6 +45,7 @@ export function DashboardShell({
     <div className="flex h-screen overflow-hidden bg-background">
       <ShellSidebar
         activePath={activePath}
+        brand={brand}
         iconMap={iconMap}
         isMinimized={isSidebarMinimized}
         items={navItems}
