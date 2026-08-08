@@ -43,7 +43,9 @@ jobs:
 
       - name: Publish to npm
         run: |
+          PKG="$(node -p "require('./package.json').name")"
           npm publish --access public
-          npm access set status public "@codewavebr/$(node -p "require('./package.json').name.split('/')[1]")" || npm access public "@codewavebr/$(node -p "require('./package.json').name.split('/')[1]")" || true
+          npm access set status=public "$PKG"
+          npm access get status "$PKG"
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
