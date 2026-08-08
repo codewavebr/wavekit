@@ -1,4 +1,4 @@
-name: Publish Package
+﻿name: Publish Package
 
 on:
   release:
@@ -42,6 +42,8 @@ jobs:
         run: npm version "${GITHUB_REF_NAME#v}" --no-git-tag-version --allow-same-version
 
       - name: Publish to npm
-        run: npm publish --access public
+        run: |
+          npm publish --access public
+          npm access set status public "@codewavebr/$(node -p "require('./package.json').name.split('/')[1]")" || npm access public "@codewavebr/$(node -p "require('./package.json').name.split('/')[1]")" || true
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
