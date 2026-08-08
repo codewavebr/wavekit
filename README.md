@@ -19,3 +19,18 @@ App-specific components that still belong outside WaveKit:
 
 - `entity-avatar`: reads tenant/application helpers.
 - `avatar-uptload`: composes app-specific avatar behavior around the generic upload dialog.
+
+## Publish
+
+Prepared for GitHub Packages under the `@codewave` scope.
+Run `bun run build` before publishing and use `npm publish` after authenticating to
+`https://npm.pkg.github.com`.
+
+## Scripts
+
+```bash
+bun install
+bun run test
+bun run typecheck
+bun run build
+```
