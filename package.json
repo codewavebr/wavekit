@@ -1,104 +1,104 @@
 {
-    "name":  "@codewavebr/wavekit",
-    "version":  "0.2.2",
-    "type":  "module",
-    "sideEffects":  [
-                        "./dist/styles.css"
-                    ],
-    "repository":  {
-                       "type":  "git",
-                       "url":  "https://github.com/codewavebr/wavekit.git"
-                   },
-    "publishConfig":  {
-                          "registry":  "https://npm.pkg.github.com"
-                      },
-    "exports":  {
-                    ".":  {
-                              "types":  "./dist/index.d.ts",
-                              "import":  "./dist/index.js"
-                          },
-                    "./charts":  {
-                                     "types":  "./dist/charts/index.d.ts",
-                                     "import":  "./dist/charts/index.js"
-                                 },
-                    "./stats":  {
-                                    "types":  "./dist/stats/index.d.ts",
-                                    "import":  "./dist/stats/index.js"
-                                },
-                    "./ui":  {
-                                 "types":  "./dist/ui/index.d.ts",
-                                 "import":  "./dist/ui/index.js"
-                             },
-                    "./tables":  {
-                                     "types":  "./dist/tables/index.d.ts",
-                                     "import":  "./dist/tables/index.js"
-                                 },
-                    "./theme":  {
-                                    "types":  "./dist/theme/index.d.ts",
-                                    "import":  "./dist/theme/index.js"
-                                },
-                    "./shell":  {
-                                    "types":  "./dist/shell/index.d.ts",
-                                    "import":  "./dist/shell/index.js"
-                                },
-                    "./icons":  {
-                                    "types":  "./dist/icons/index.d.ts",
-                                    "import":  "./dist/icons/index.js"
-                                },
-                    "./utils":  {
-                                    "types":  "./dist/utils/index.d.ts",
-                                    "import":  "./dist/utils/index.js"
-                                },
-                    "./styles.css":  "./dist/styles.css"
-                },
-    "files":  [
-                  "dist",
-                  "README.md"
-              ],
-    "scripts":  {
-                    "build":  "tsc -p tsconfig.build.json \u0026\u0026 bun run build:assets",
-                    "build:assets":  "bun -e \"await Bun.write(\u0027dist/styles.css\u0027, await Bun.file(\u0027src/styles.css\u0027).text())\"",
-                    "test":  "tsx --test \"tests/**/*.test.ts\"",
-                    "typecheck":  "tsc --noEmit"
-                },
-    "peerDependencies":  {
-                             "@heroui/react":  "^3.0.0",
-                             "@heroui/styles":  "^3.0.0",
-                             "@tanstack/react-table":  "^8.0.0",
-                             "@tanstack/react-virtual":  "^3.0.0",
-                             "color-convert":  "^3.1.0",
-                             "date-fns":  "^4.0.0",
-                             "lucide-react":  "^0.511.0",
-                             "next-themes":  "^0.4.0",
-                             "react":  "\u003e=19",
-                             "react-dom":  "\u003e=19",
-                             "react-hook-form":  "^7.0.0",
-                             "recharts":  "^2.0.0",
-                             "tailwindcss":  "\u003e=4.0.0"
-                         },
-    "dependencies":  {
-                         "@internationalized/date":  "^3.12.3"
-                     },
-    "devDependencies":  {
-                            "@heroui/react":  "^3.2.4",
-                            "@heroui/styles":  "^3.2.4",
-                            "@tanstack/react-table":  "^8.0.0",
-                            "@tanstack/react-virtual":  "^3.0.0",
-                            "@types/node":  "^20.9.0",
-                            "@types/react":  "19.1.8",
-                            "@types/react-dom":  "19.1.6",
-                            "clsx":  "^2.0.0",
-                            "color-convert":  "^3.1.0",
-                            "date-fns":  "^4.1.0",
-                            "lucide-react":  "^0.511.0",
-                            "next-themes":  "^0.4.0",
-                            "react":  "^19.0.0",
-                            "react-dom":  "^19.0.0",
-                            "react-hook-form":  "^7.0.0",
-                            "recharts":  "^2.0.0",
-                            "tailwind-merge":  "^3.0.0",
-                            "tailwindcss":  "^4.0.0",
-                            "tsx":  "^4.19.4",
-                            "typescript":  "^5.2.2"
-                        }
+  "name": "@codewavebr/wavekit",
+  "version": "0.2.3",
+  "type": "module",
+  "sideEffects": [
+    "./dist/styles.css"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/codewavebr/wavekit.git"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./charts": {
+      "types": "./dist/charts/index.d.ts",
+      "import": "./dist/charts/index.js"
+    },
+    "./stats": {
+      "types": "./dist/stats/index.d.ts",
+      "import": "./dist/stats/index.js"
+    },
+    "./ui": {
+      "types": "./dist/ui/index.d.ts",
+      "import": "./dist/ui/index.js"
+    },
+    "./tables": {
+      "types": "./dist/tables/index.d.ts",
+      "import": "./dist/tables/index.js"
+    },
+    "./theme": {
+      "types": "./dist/theme/index.d.ts",
+      "import": "./dist/theme/index.js"
+    },
+    "./shell": {
+      "types": "./dist/shell/index.d.ts",
+      "import": "./dist/shell/index.js"
+    },
+    "./icons": {
+      "types": "./dist/icons/index.d.ts",
+      "import": "./dist/icons/index.js"
+    },
+    "./utils": {
+      "types": "./dist/utils/index.d.ts",
+      "import": "./dist/utils/index.js"
+    },
+    "./styles.css": "./dist/styles.css"
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json && bun run build:assets",
+    "build:assets": "bun -e \"await Bun.write('dist/styles.css', await Bun.file('src/styles.css').text())\"",
+    "test": "tsx --test \"tests/**/*.test.ts\"",
+    "typecheck": "tsc --noEmit"
+  },
+  "peerDependencies": {
+    "@heroui/react": "^3.0.0",
+    "@heroui/styles": "^3.0.0",
+    "@tanstack/react-table": "^8.0.0",
+    "@tanstack/react-virtual": "^3.0.0",
+    "color-convert": "^3.1.0",
+    "date-fns": "^4.0.0",
+    "lucide-react": "^0.511.0",
+    "next-themes": "^0.4.0",
+    "react": ">=19",
+    "react-dom": ">=19",
+    "react-hook-form": "^7.0.0",
+    "recharts": "^2.0.0",
+    "tailwindcss": ">=4.0.0"
+  },
+  "dependencies": {
+    "@internationalized/date": "^3.12.3"
+  },
+  "devDependencies": {
+    "@heroui/react": "^3.2.4",
+    "@heroui/styles": "^3.2.4",
+    "@tanstack/react-table": "^8.0.0",
+    "@tanstack/react-virtual": "^3.0.0",
+    "@types/node": "^20.9.0",
+    "@types/react": "19.1.8",
+    "@types/react-dom": "19.1.6",
+    "clsx": "^2.0.0",
+    "color-convert": "^3.1.0",
+    "date-fns": "^4.1.0",
+    "lucide-react": "^0.511.0",
+    "next-themes": "^0.4.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "react-hook-form": "^7.0.0",
+    "recharts": "^2.0.0",
+    "tailwind-merge": "^3.0.0",
+    "tailwindcss": "^4.0.0",
+    "tsx": "^4.19.4",
+    "typescript": "^5.2.2"
+  }
 }
