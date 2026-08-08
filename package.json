@@ -10,7 +10,8 @@
     "url": "https://github.com/codewavebr/wavekit.git"
   },
   "publishConfig": {
-    "registry": "https://npm.pkg.github.com"
+    "access": "public",
+    "registry": "https://registry.npmjs.org"
   },
   "exports": {
     ".": {

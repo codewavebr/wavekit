@@ -59,10 +59,11 @@ WaveKit follows HeroUI compound APIs (`Card.Header`, `Modal.Dialog`, `Tabs.List`
 
 Publishing happens automatically when a GitHub Release is published.
 The workflow syncs `package.json` version from the release tag (e.g. `v0.2.0`)
-and publishes `@codewavebr/wavekit` to GitHub Packages.
+and publishes `@codewavebr/wavekit` to the public npm registry
+(`https://registry.npmjs.org`). No install auth is required for consumers.
 
-Prepared for GitHub Packages under the `@codewavebr` scope.
-Consumers should authenticate to `https://npm.pkg.github.com`.
+The repository secret `NPM_TOKEN` (Automation token with publish rights on the
+`@codewavebr` npm org) must be set for the publish workflow.
 
 ## Scripts
 
